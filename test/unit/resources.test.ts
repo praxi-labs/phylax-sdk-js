@@ -159,10 +159,12 @@ describe('entitlements', () => {
   it('reads the caller plan and quota from the account endpoint', async () => {
     const fetchImpl = vi
       .fn()
-      .mockResolvedValue(ok({ plan: 'business', permissions: [], quota_remaining: 500 }))
+      .mockResolvedValue(
+        ok({ plan: 'marketplace', permissions: [], quota_remaining: 500 }),
+      )
     const res = await sdkWith(fetchImpl).quota.entitlements()
 
     expect(call(fetchImpl).url.pathname).toBe('/v1/account/entitlements')
-    expect(res.success && res.data.plan).toBe('business')
+    expect(res.success && res.data.plan).toBe('marketplace')
   })
 })

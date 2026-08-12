@@ -47,7 +47,11 @@ export class QuotaResource {
   checkAccess(method: string, entitlements: Entitlements): AccessCheck {
     const requirement = METHOD_REQUIREMENTS[method]
     if (!requirement) {
-      return { allowed: true, reasons: [], requirement: undefined }
+      return {
+        allowed: false,
+        reasons: [`unknown method: ${method}`],
+        requirement: undefined,
+      }
     }
 
     const reasons: string[] = []

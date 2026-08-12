@@ -1,4 +1,4 @@
-export type PlanTier = 'free' | 'team' | 'business' | 'enterprise'
+export type PlanTier = 'anonymous' | 'builder' | 'marketplace' | 'enterprise'
 
 export type Permission =
   | 'artifacts:read'
@@ -12,7 +12,6 @@ export type Permission =
   | 'repositories:write'
   | 'webhooks:read'
   | 'webhooks:write'
-  | 'network:read'
 
 export interface MethodRequirement {
   quotaCost: number
@@ -30,9 +29,15 @@ export interface Entitlements {
 }
 
 export const PLAN_ORDER: readonly PlanTier[] = [
-  'free',
-  'team',
-  'business',
+  'anonymous',
+  'builder',
+  'marketplace',
+  'enterprise',
+]
+
+export const PAID_PLANS: readonly PlanTier[] = [
+  'builder',
+  'marketplace',
   'enterprise',
 ]
 
@@ -40,4 +45,8 @@ export function planAtLeast(actual: string, required: PlanTier): boolean {
   const a = PLAN_ORDER.indexOf(actual as PlanTier)
   const r = PLAN_ORDER.indexOf(required)
   return a !== -1 && r !== -1 && a >= r
+}
+
+export function isPaidPlan(plan: string): boolean {
+  return (PAID_PLANS as readonly string[]).includes(plan)
 }
