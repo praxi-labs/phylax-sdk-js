@@ -94,7 +94,6 @@ Costs are relative units. A verification is one unit; anything that runs a polic
 | `repositories.get` | 1 | `repositories:read` | builder |
 | `repositories.add` | 1 | `repositories:write` | builder |
 | `repositories.remove` | 1 | `repositories:write` | builder |
-| `repositories.verify` | 2 | `repositories:read` | builder |
 | `webhooks.list` | 1 | `webhooks:read` | builder |
 | `webhooks.get` | 1 | `webhooks:read` | builder |
 | `webhooks.create` | 1 | `webhooks:write` | builder |

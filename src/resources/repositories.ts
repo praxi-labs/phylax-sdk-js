@@ -2,7 +2,7 @@ import { PATHS } from '../constants.js'
 import type { HttpClient } from '../client/http-client.js'
 import type { Paginated, RequestOptions } from '../types/options.js'
 import type { PhylaxResult } from '../types/result.js'
-import type { Repository, VerificationResult } from '../types/domain.js'
+import type { Repository } from '../types/domain.js'
 
 export interface AddRepositoryInput {
   url: string
@@ -44,14 +44,4 @@ export class RepositoriesResource {
     return this.#http.delete<void>(PATHS.repository(id), options)
   }
 
-  async verify(
-    url: string,
-    options?: RequestOptions,
-  ): Promise<PhylaxResult<VerificationResult>> {
-    return this.#http.post<VerificationResult>(
-      PATHS.repositoryVerify,
-      { url },
-      options,
-    )
-  }
 }

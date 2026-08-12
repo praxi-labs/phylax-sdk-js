@@ -18,17 +18,51 @@ export interface Finding {
   severity?: string
   title?: string
   file?: string
+  cwe?: string
+  remediation?: string
+  line?: string
   [key: string]: unknown
+}
+
+/**
+ * Whether the network has anything to say about this artifact.
+ *
+ * `network` means it was evaluated. `none` means it was not, and the verdict
+ * is ALLOW rather than a 404, so one unknown entry does not break a batch call.
+ * Branch on this, not on the verdict, if you need to fail closed on artifacts
+ * the network has never seen.
+ */
+export type Coverage = 'network' | 'none'
+
+/**
+ * What the reference was reduced to before lookup.
+ *
+ * Verdicts are recorded per package rather than per version, so
+ * `pkg:npm/express@4.18.2` resolves to `npm:express`. `version_specific` is
+ * false whenever a version was supplied and could not be honoured.
+ */
+export interface Resolution {
+  requested: string
+  resolved_to: string | null
+  version_specific: boolean
+  note?: string | null
 }
 
 export interface VerificationResult {
   artifact: string
   verdict: Verdict | string
+  coverage: Coverage | string
+  resolution?: Resolution
+  reason?: string
+  policies?: string[]
+  risk_band?: RiskLevel | string
   risk_score?: number
   risk?: RiskLevel | string
   provenance?: string
   attestation?: { count?: number; available?: boolean } | string
+  finding_counts?: Record<string, number>
   findings?: Finding[]
+  last_evaluated_at?: string | null
   evaluated_at?: string
   [key: string]: unknown
 }

@@ -147,12 +147,6 @@ describe('webhooks and repositories', () => {
     expect(JSON.parse(init.body as string).provider).toBe('github')
   })
 
-  it('verifies a repository without registering it', async () => {
-    const fetchImpl = vi.fn().mockResolvedValue(ok({ verdict: 'ALLOW' }))
-    await sdkWith(fetchImpl).repositories.verify('https://github.com/acme/api')
-
-    expect(call(fetchImpl).url.pathname).toBe('/v1/repositories/verify')
-  })
 })
 
 describe('entitlements', () => {
