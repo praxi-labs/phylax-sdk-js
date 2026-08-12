@@ -26,6 +26,7 @@ export const PATHS = {
 
   repositories: '/v1/repositories',
   repository: (id: string) => `/v1/repositories/${encodeURIComponent(id)}`,
+  repositoryVerify: '/v1/repositories/verify',
 
   webhooks: '/v1/webhooks',
   webhook: (id: string) => `/v1/webhooks/${encodeURIComponent(id)}`,
@@ -122,6 +123,11 @@ export const METHOD_REQUIREMENTS: Readonly<
   'repositories.remove': {
     quotaCost: 1,
     permissions: ['repositories:write'],
+    minimumPlan: 'builder',
+  },
+  'repositories.verify': {
+    quotaCost: 1,
+    permissions: ['repositories:read'],
     minimumPlan: 'builder',
   },
   'webhooks.list': {
