@@ -1,5 +1,7 @@
 # @phyi/sdk
 
+[![npm](https://img.shields.io/npm/v/@phyi/sdk?label=npm&color=CB3837)](https://www.npmjs.com/package/@phyi/sdk)
+
 TypeScript SDK for the [Phylax](https://phyi.dev) API. Package verification, policy evaluation, attestations, and plan aware quota handling.
 
 `@phyi/sdk` is the canonical JavaScript and TypeScript client for the Phylax API. It exists so any Node application, whether that is your build pipeline, your registry tooling, or your own security gate, can verify what your software depends on without hand rolling auth, retries, redaction, and response shapes. The SDK is consumed by the Phylax CLI, MCP server, VS Code extension, Chrome extension, and GitHub Action.
@@ -112,3 +114,17 @@ npm run build
 ## License
 
 MIT
+
+## The rest of Phylax
+
+| Tool | Where to get it |
+| --- | --- |
+| JavaScript SDK | [`@phyi/sdk`](https://www.npmjs.com/package/@phyi/sdk) on npm |
+| Python SDK | [`phylax-sdk`](https://github.com/praxi-labs/phylax-sdk-python), PyPI release pending |
+| MCP server | [`@phyi/mcp`](https://www.npmjs.com/package/@phyi/mcp) on npm |
+| Agent runtime gate | [`@phyi/runtime-gate`](https://www.npmjs.com/package/@phyi/runtime-gate) on npm |
+| VS Code extension | [`phylax.phylax`](https://marketplace.visualstudio.com/items?itemName=phylax.phylax) on the Marketplace |
+| GitHub Action | [`praxi-labs/phylax-action`](https://github.com/praxi-labs/phylax-action) |
+| Browser extension | [`praxi-labs/phylax-chrome`](https://github.com/praxi-labs/phylax-chrome/releases/latest), Web Store listing pending |
+
+Docs live at [phyi.dev](https://phyi.dev).
