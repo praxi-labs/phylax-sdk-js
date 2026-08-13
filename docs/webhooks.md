@@ -19,7 +19,7 @@ Store the secret when you create the endpoint. It is not returned again.
 Anyone who learns your endpoint URL can post to it. Verify before acting.
 
 ```typescript
-import { verifySignature } from '@phylax/sdk'
+import { verifySignature } from '@phyi/sdk'
 
 app.post('/hooks/phylax', express.raw({ type: 'application/json' }), (req, res) => {
   const result = verifySignature({

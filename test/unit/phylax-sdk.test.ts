@@ -57,7 +57,7 @@ describe('PhylaxSdk routing', () => {
     }).health()
 
     const headers = fetchImpl.mock.calls[0]![1].headers as Record<string, string>
-    expect(headers['user-agent']).toMatch(/^phylax-vscode\/1\.2\.3 @phylax\/sdk\//)
+    expect(headers['user-agent']).toMatch(/^phylax-vscode\/1\.2\.3 @phyi\/sdk\//)
   })
 
   it('surfaces a transport failure as a result rather than a rejection', async () => {

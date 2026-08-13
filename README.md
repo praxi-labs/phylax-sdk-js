@@ -1,13 +1,13 @@
-# @phylax/sdk
+# @phyi/sdk
 
 TypeScript SDK for the [Phylax](https://phyi.dev) API. Package verification, policy evaluation, attestations, and plan aware quota handling.
 
-`@phylax/sdk` is the canonical JavaScript and TypeScript client for the Phylax API. It exists so any Node application, whether that is your build pipeline, your registry tooling, or your own security gate, can verify what your software depends on without hand rolling auth, retries, redaction, and response shapes. The SDK is consumed by the Phylax CLI, MCP server, VS Code extension, Chrome extension, and GitHub Action.
+`@phyi/sdk` is the canonical JavaScript and TypeScript client for the Phylax API. It exists so any Node application, whether that is your build pipeline, your registry tooling, or your own security gate, can verify what your software depends on without hand rolling auth, retries, redaction, and response shapes. The SDK is consumed by the Phylax CLI, MCP server, VS Code extension, Chrome extension, and GitHub Action.
 
 ## Install
 
 ```sh
-npm install @phylax/sdk
+npm install @phyi/sdk
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ npm install @phylax/sdk
 <summary><b>Quickstart</b>: construct <code>PhylaxSdk</code> with a token, verify a package, and act on the verdict</summary>
 
 ```typescript
-import { PhylaxSdk } from '@phylax/sdk'
+import { PhylaxSdk } from '@phyi/sdk'
 
 const phylax = new PhylaxSdk({
   apiToken: process.env.PHYLAX_API_TOKEN,
@@ -70,7 +70,7 @@ if (entitlements.success) {
 <summary><b>Verify an inbound webhook delivery</b></summary>
 
 ```typescript
-import { verifySignature } from '@phylax/sdk'
+import { verifySignature } from '@phyi/sdk'
 
 const result = verifySignature({
   rawBody,

@@ -5,7 +5,7 @@ Every method returns a `PhylaxResult<T>`. See [Errors and retries](./errors-and-
 ## Constructing a client
 
 ```typescript
-import { PhylaxSdk } from '@phylax/sdk'
+import { PhylaxSdk } from '@phyi/sdk'
 
 const phylax = new PhylaxSdk({ apiToken: process.env.PHYLAX_API_TOKEN })
 ```
