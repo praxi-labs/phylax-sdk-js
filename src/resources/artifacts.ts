@@ -2,11 +2,23 @@ import { PATHS } from '../constants.js'
 import type { HttpClient } from '../client/http-client.js'
 import type { Paginated, RequestOptions } from '../types/options.js'
 import type { PhylaxResult } from '../types/result.js'
-import type { SearchHit, VerificationResult } from '../types/domain.js'
+import type {
+  AnalysisResult,
+  ArtifactKind,
+  SearchHit,
+  VerificationResult,
+} from '../types/domain.js'
 
 export interface VerifyOptions extends RequestOptions {
   policy?: string | undefined
   include?: string[] | undefined
+}
+
+export interface AnalyseOptions extends RequestOptions {
+  /** Hint the classifier. It decides for itself and flags a disagreement. */
+  artifactType?: ArtifactKind | string | undefined
+  /** A name for the artifact, echoed back on the result. */
+  coordinate?: string | undefined
 }
 
 export interface ListArtifactsParams {
@@ -54,6 +66,36 @@ export class ArtifactsResource {
         artifacts,
         ...(policy ? { policy } : {}),
         ...(include ? { include } : {}),
+      },
+      rest,
+    )
+  }
+
+  /**
+   * Analyse an artifact you supply, rather than looking one up.
+   *
+   * `verify` and `get` answer from what the network has already recorded, so an
+   * artifact nobody has attested comes back with coverage `none` and a verdict
+   * of ALLOW. That default is safe for a catalogue and wrong for a gate: the
+   * artifact you most need judged is the one nobody has seen.
+   *
+   * This sends the source itself. The server classifies it, resolves the
+   * champions promoted for that track, runs them against these bytes and fuses
+   * their opinions with a static pass.
+   *
+   * @param files Relative path to file contents. Text only.
+   */
+  async analyse(
+    files: Record<string, string>,
+    options: AnalyseOptions = {},
+  ): Promise<PhylaxResult<AnalysisResult>> {
+    const { artifactType, coordinate, ...rest } = options
+    return this.#http.post<AnalysisResult>(
+      PATHS.artifactAnalyse,
+      {
+        files,
+        ...(artifactType ? { artifact_type: artifactType } : {}),
+        ...(coordinate ? { coordinate } : {}),
       },
       rest,
     )

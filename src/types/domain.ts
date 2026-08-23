@@ -35,6 +35,52 @@ export interface Finding {
 export type Coverage = 'network' | 'none'
 
 /**
+ * How far the engine actually got on an analysed artifact.
+ *
+ * `champion` means the network's top-ranked agents executed it in a sandbox.
+ * `cached` is a previous champion run over identical bytes. `static` means only
+ * the signal scanner reached it, which is a far weaker claim, and `none` means
+ * nothing analysed it at all.
+ *
+ * Read this before acting on a verdict. A WARN backed by three champions and a
+ * WARN from a regex pass are indistinguishable if you only read `verdict`.
+ */
+export type AnalysisCoverage = 'champion' | 'cached' | 'static' | 'none'
+
+export interface EngineInfo {
+  /** The promoted ensemble's identity. `none` when nobody was promoted. */
+  version: string
+  /** How many champions produced an opinion. Zero means static only. */
+  analysers: number
+  /** Whether the analysers disagreed and the strictest verdict won. */
+  dissent: boolean
+}
+
+/**
+ * The result of analysing supplied bytes, as opposed to looking up a name.
+ *
+ * `identity` is a digest of exactly what was read, so two runs over the same
+ * source are comparable. `trace` carries the engine's own account of how it
+ * reached the verdict and is present only for plans that receive full finding
+ * detail.
+ */
+export interface AnalysisResult {
+  artifact: string
+  artifact_type: ArtifactKind | string
+  verdict: Verdict | string
+  confidence: number
+  coverage: AnalysisCoverage | string
+  engine: EngineInfo
+  identity?: string
+  classification_disputed?: boolean
+  finding_counts?: Record<string, number>
+  findings?: Finding[]
+  reasons?: string[]
+  trace?: Record<string, unknown>
+  [key: string]: unknown
+}
+
+/**
  * What the reference was reduced to before lookup.
  *
  * Verdicts are recorded per package rather than per version, so

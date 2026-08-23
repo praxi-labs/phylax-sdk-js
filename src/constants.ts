@@ -13,6 +13,7 @@ export const PATHS = {
 
   artifacts: '/v1/artifacts',
   artifactVerify: '/v1/artifacts/verify',
+  artifactAnalyse: '/v1/artifacts/analyse',
   artifact: (ref: string) => `/v1/artifacts/${encodeURIComponent(ref)}`,
   search: '/v1/search',
 
@@ -37,6 +38,11 @@ export const METHOD_REQUIREMENTS: Readonly<
 > = {
   'artifacts.verify': {
     quotaCost: 1,
+    permissions: ['artifacts:verify'],
+    minimumPlan: 'builder',
+  },
+  'artifacts.analyse': {
+    quotaCost: 2,
     permissions: ['artifacts:verify'],
     minimumPlan: 'builder',
   },

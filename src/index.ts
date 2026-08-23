@@ -7,6 +7,7 @@ export { buildUserAgent } from './client/user-agent.js'
 
 export { ArtifactsResource } from './resources/artifacts.js'
 export type {
+  AnalyseOptions,
   ListArtifactsParams,
   SearchParams,
   VerifyOptions,
