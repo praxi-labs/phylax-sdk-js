@@ -12,6 +12,12 @@ export type {
   SearchParams,
   VerifyOptions,
 } from './resources/artifacts.js'
+export { AuditResource } from './resources/audit.js'
+export type {
+  AuditOptions,
+  AuditRun,
+  RunAuditOptions,
+} from './resources/audit.js'
 export { AttestationsResource } from './resources/attestations.js'
 export type { ListAttestationsParams } from './resources/attestations.js'
 export { PoliciesResource } from './resources/policies.js'

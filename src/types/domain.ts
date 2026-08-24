@@ -113,6 +113,78 @@ export interface VerificationResult {
   [key: string]: unknown
 }
 
+/**
+ * How far an audit has got.
+ *
+ * `resolve` expands the manifests into a graph, `precrawl` asks the index what
+ * is already known, `scan` fetches and analyses the rest. A run that dies leaves
+ * its last state behind rather than vanishing.
+ */
+export type AuditState =
+  | 'pending'
+  | 'precrawl'
+  | 'resolve'
+  | 'scan'
+  | 'complete'
+  | 'failed'
+
+export interface AuditScan {
+  type?: 'scan'
+  id: string
+  state: AuditState | string
+  verdict?: Verdict | string | null
+  coordinate?: string | null
+  manifests?: string[]
+  notes?: string[]
+  ecosystems?: Record<string, number>
+  total?: number
+  completed?: number
+  error?: string | null
+  stream?: string
+  created_at?: string | null
+  finished_at?: string | null
+}
+
+/**
+ * One package in the tree, and where it came from.
+ *
+ * `ancestors` and `declared_line` are what make a verdict actionable. Knowing a
+ * package is BLOCK is a fact; knowing it arrived through a build tool and is
+ * declared on a particular line is something a person can do something about.
+ */
+export interface AuditArtifact {
+  type: 'artifact'
+  purl: string
+  ecosystem: string
+  name: string
+  version: string
+  direct: boolean
+  dev: boolean
+  state: string
+  verdict: Verdict | string
+  coverage?: string | null
+  analysers?: number
+  declared_in?: string | null
+  declared_line?: number | null
+  ancestors?: string[]
+  finding_counts?: Record<string, number>
+  findings?: Finding[]
+  reasons?: string[]
+  engine_version?: string
+  identity?: string
+  error?: string
+}
+
+export interface AuditSummary {
+  type: 'summary'
+  verdict?: Verdict | string | null
+  state?: string
+  packages: number
+  by_verdict: Record<string, number>
+}
+
+export type AuditEvent = AuditScan | AuditArtifact | AuditSummary
+
 export interface Attestation {
   id?: string
   artifact?: string

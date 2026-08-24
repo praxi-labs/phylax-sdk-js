@@ -14,6 +14,10 @@ export const PATHS = {
   artifacts: '/v1/artifacts',
   artifactVerify: '/v1/artifacts/verify',
   artifactAnalyse: '/v1/artifacts/analyse',
+
+  audit: '/v1/audit',
+  auditScan: (id: string) => `/v1/audit/${encodeURIComponent(id)}`,
+  auditStream: (id: string) => `/v1/audit/${encodeURIComponent(id)}/stream`,
   artifact: (ref: string) => `/v1/artifacts/${encodeURIComponent(ref)}`,
   search: '/v1/search',
 
@@ -44,6 +48,16 @@ export const METHOD_REQUIREMENTS: Readonly<
   'artifacts.analyse': {
     quotaCost: 2,
     permissions: ['artifacts:verify'],
+    minimumPlan: 'builder',
+  },
+  'audit.create': {
+    quotaCost: 2,
+    permissions: ['artifacts:verify'],
+    minimumPlan: 'builder',
+  },
+  'audit.get': {
+    quotaCost: 0,
+    permissions: ['artifacts:read'],
     minimumPlan: 'builder',
   },
   'artifacts.verifyMany': {

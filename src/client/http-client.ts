@@ -152,4 +152,33 @@ export class HttpClient {
   delete<T>(path: string, options?: RequestOptions): Promise<PhylaxResult<T>> {
     return this.request<T>('DELETE', path, options)
   }
+
+  /**
+   * The response itself, unparsed and unretried.
+   *
+   * `request` reads the whole body to JSON, which defeats a streaming endpoint.
+   * This is the seam for newline-delimited responses, where the point is to act
+   * on each line as it arrives. No retry: a half-consumed stream cannot be
+   * replayed, so a caller decides what to do about a failure.
+   */
+  async raw(
+    method: HttpMethod,
+    path: string,
+    options: RequestOptions = {},
+  ): Promise<Response> {
+    const url = buildUrl(this.#config.baseUrl, path, options.query)
+    const response = await this.#config.fetchImpl(url, {
+      method,
+      headers: {
+        accept: 'application/x-ndjson',
+        authorization: `Bearer ${this.#config.apiToken}`,
+        'user-agent': this.#config.userAgent,
+      },
+      ...(options.signal ? { signal: options.signal } : {}),
+    })
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} ${response.statusText}`.trim())
+    }
+    return response
+  }
 }

@@ -7,6 +7,7 @@ import {
   PATHS,
 } from './constants.js'
 import { ArtifactsResource } from './resources/artifacts.js'
+import { AuditResource } from './resources/audit.js'
 import { AttestationsResource } from './resources/attestations.js'
 import { PoliciesResource } from './resources/policies.js'
 import { QuotaResource } from './resources/quota.js'
@@ -20,6 +21,7 @@ export class PhylaxSdk {
   readonly #http: HttpClient
 
   readonly artifacts: ArtifactsResource
+  readonly audit: AuditResource
   readonly attestations: AttestationsResource
   readonly policies: PoliciesResource
   readonly repositories: RepositoriesResource
@@ -51,6 +53,7 @@ export class PhylaxSdk {
     })
 
     this.artifacts = new ArtifactsResource(this.#http)
+    this.audit = new AuditResource(this.#http)
     this.attestations = new AttestationsResource(this.#http)
     this.policies = new PoliciesResource(this.#http)
     this.repositories = new RepositoriesResource(this.#http)
